@@ -1,4 +1,4 @@
-package mine2;
+package hw_6seminar;
 
 // Задание
 
@@ -26,7 +26,7 @@ public class Program {
         Laptop laptop1 = new Laptop(1, "MacBook", "grey", 8, 512, "MacOS");
         Laptop laptop2 = new Laptop(2, "MacBook", "white", 8, 1024, "MacOS");
         Laptop laptop3 = new Laptop(2, "MacBook", "white", 8, 1024, "MacOS");
-        Laptop laptop4 = new Laptop(3, "Lenovo", "black", 16, 256, "Windows");
+        Laptop laptop4 = new Laptop(3, "Lenovo", "silver", 16, 256, "Windows");
         Laptop laptop5 = new Laptop(4, "Lenovo", "black", 16, 512, "Windows");
         Laptop laptop6 = new Laptop(5, "HP", "grey", 8, 256, "Windows");
         Laptop laptop7 = new Laptop(6, "Aser", "silver", 16, 1024, "Linux");
@@ -42,6 +42,8 @@ public class Program {
         }
     }
 
+    public static HashMap<String, String> filterParameter = new HashMap<>();
+
     public static HashMap<String, String> userData() {
         HashMap<Integer, String> characteristics = new HashMap<>();
         characteristics.put(0, "stop");    
@@ -53,7 +55,6 @@ public class Program {
 
         Scanner sc = new Scanner(System.in);
         boolean flag = true;
-        HashMap<String, String> filterParameter = new HashMap<>();
 
         while (flag) {
             for (int i : characteristics.keySet()) {
@@ -103,29 +104,59 @@ public class Program {
         Set<Laptop> filterLaptop = new HashSet<>();
         for (Laptop laptop: laptopsArr){
             if(laptop.getModel().equals(filterParameter.get("model")) || 
-            filterParameter.get("model") == null || 
-            laptop.getColor().equals(filterParameter.get("color")) || 
-            filterParameter.get("color") == null || 
-            laptop.getRam() >= Integer.parseInt(filterParameter.get("ram")) || 
-            filterParameter.get("ram") == null || 
-            laptop.getSsd() >= Integer.parseInt(filterParameter.get("ssd")) || 
-            filterParameter.get("ssd") == null || 
-            laptop.getOs().equals(filterParameter.get("os")) || 
-            filterParameter.get("os") == null){
-                filterLaptop.add(laptop);
-            } else {
-                System.out.println("There is no laptops with such parametrs!");
-            }
+            filterParameter.get("model") == null) {
+                if (laptop.getColor().equals(filterParameter.get("color")) || 
+                filterParameter.get("color") == null) {
+                    if (laptop.getRam() >= Integer.parseInt(filterParameter.get("ram")) || 
+                    filterParameter.get("ram") == null) {
+                        if (laptop.getSsd() >= Integer.parseInt(filterParameter.get("ssd")) || 
+                        filterParameter.get("ssd") == null) {
+                            if (laptop.getOs().equals(filterParameter.get("os")) || 
+                            filterParameter.get("os") == null) {
+                                filterLaptop.add(laptop);
+                            }
+                        }
+                    }
+                }
+            } 
+        }
+        if (filterLaptop.isEmpty()) {
+            System.out.println("There is no laptops with such parametrs!");
         }
         return filterLaptop;
     }
 
+
+    // public static Set<Laptop> filterResult(Set<Laptop> laptopsArr){
+    //     Map<String, String> filterParameter = userData();
+    //     Set<Laptop> filterLaptop = new HashSet<>();
+    //     for (Laptop laptop: laptopsArr){
+    //         if(laptop.getModel().equals(filterParameter.get("model")) || 
+    //         filterParameter.get("model") == null || 
+    //         laptop.getColor().equals(filterParameter.get("color")) || 
+    //         filterParameter.get("color") == null || 
+    //         laptop.getRam() >= Integer.parseInt(filterParameter.get("ram")) || 
+    //         filterParameter.get("ram") == null || 
+    //         laptop.getSsd() >= Integer.parseInt(filterParameter.get("ssd")) || 
+    //         filterParameter.get("ssd") == null || 
+    //         laptop.getOs().equals(filterParameter.get("os")) || 
+    //         filterParameter.get("os") == null){
+    //             filterLaptop.add(laptop);
+    //         } else {
+    //             System.out.println("There is no laptops with such parametrs!");
+    //         }
+    //     }
+    //     return filterLaptop;
+    // }
+
+    
+
     public static void main(String[] args) {
         Set<Laptop> laptopsArr = creatingObjectsLaptops();
-        // printObjectsLapt1ops(laptopsArr); // распечатка всех имеющихся компьютеров
+        printObjectsLaptops(laptopsArr); // распечатка всех имеющихся ноутбуков
         Set<Laptop> filterLaptops = filterResult(laptopsArr);
-        printObjectsLaptops(filterLaptops);
-        System.out.println(userData());
+        printObjectsLaptops(filterLaptops); // распечатка отфильтрованных ноутбуков
+        // System.out.println(userData());
     }
     
 }

@@ -1,4 +1,4 @@
-package mine2;
+package hw_6seminar;
 
 import java.util.Objects;
 
