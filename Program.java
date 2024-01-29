@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-
 public class Program {
 
     public static Set<Laptop> creatingObjectsLaptops() {
@@ -96,6 +95,7 @@ public class Program {
                     break;
             }
         }
+        sc.close();
         return filterParameter;
     }
 
@@ -103,16 +103,11 @@ public class Program {
         Map<String, String> filterParameter = userData();
         Set<Laptop> filterLaptop = new HashSet<>();
         for (Laptop laptop: laptopsArr){
-            if(laptop.getModel().equals(filterParameter.get("model")) || 
-            filterParameter.get("model") == null) {
-                if (laptop.getColor().equals(filterParameter.get("color")) || 
-                filterParameter.get("color") == null) {
-                    if (laptop.getRam() >= Integer.parseInt(filterParameter.get("ram")) || 
-                    filterParameter.get("ram") == null) {
-                        if (laptop.getSsd() >= Integer.parseInt(filterParameter.get("ssd")) || 
-                        filterParameter.get("ssd") == null) {
-                            if (laptop.getOs().equals(filterParameter.get("os")) || 
-                            filterParameter.get("os") == null) {
+            if(laptop.getModel().equals(filterParameter.get("model")) || filterParameter.get("model") == null) {
+                if (laptop.getColor().equals(filterParameter.get("color")) || filterParameter.get("color") == null) {
+                    if (laptop.getOs().equals(filterParameter.get("os")) || filterParameter.get("os") == null) {
+                        if (filterParameter.get("ram") == null || (filterParameter.get("ram") != null && laptop.getRam() >= Integer.parseInt(filterParameter.get("ram")))) {
+                            if (filterParameter.get("ssd") == null || (filterParameter.get("ssd") != null && laptop.getRam() >= Integer.parseInt(filterParameter.get("ssd")))) {
                                 filterLaptop.add(laptop);
                             }
                         }
@@ -124,39 +119,12 @@ public class Program {
             System.out.println("There is no laptops with such parametrs!");
         }
         return filterLaptop;
-    }
-
-
-    // public static Set<Laptop> filterResult(Set<Laptop> laptopsArr){
-    //     Map<String, String> filterParameter = userData();
-    //     Set<Laptop> filterLaptop = new HashSet<>();
-    //     for (Laptop laptop: laptopsArr){
-    //         if(laptop.getModel().equals(filterParameter.get("model")) || 
-    //         filterParameter.get("model") == null || 
-    //         laptop.getColor().equals(filterParameter.get("color")) || 
-    //         filterParameter.get("color") == null || 
-    //         laptop.getRam() >= Integer.parseInt(filterParameter.get("ram")) || 
-    //         filterParameter.get("ram") == null || 
-    //         laptop.getSsd() >= Integer.parseInt(filterParameter.get("ssd")) || 
-    //         filterParameter.get("ssd") == null || 
-    //         laptop.getOs().equals(filterParameter.get("os")) || 
-    //         filterParameter.get("os") == null){
-    //             filterLaptop.add(laptop);
-    //         } else {
-    //             System.out.println("There is no laptops with such parametrs!");
-    //         }
-    //     }
-    //     return filterLaptop;
-    // }
-
-    
+    }    
 
     public static void main(String[] args) {
         Set<Laptop> laptopsArr = creatingObjectsLaptops();
-        printObjectsLaptops(laptopsArr); // распечатка всех имеющихся ноутбуков
+        // printObjectsLaptops(laptopsArr); // распечатка всех имеющихся ноутбуков
         Set<Laptop> filterLaptops = filterResult(laptopsArr);
         printObjectsLaptops(filterLaptops); // распечатка отфильтрованных ноутбуков
-        // System.out.println(userData());
-    }
-    
+    } 
 }
